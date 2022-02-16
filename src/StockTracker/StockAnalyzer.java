@@ -5,34 +5,27 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+
+import fileUtilities.FileWriting;
 
 
 public class StockAnalyzer {
 
 	public static void main(String[] args) throws IOException{
-		final String SYM = "SHOP";
-		URL url = new URL("https://www.google.com/finance/quote/SHOP:TSE");
-		URLConnection urlConn = url.openConnection();
-		InputStreamReader inStream = new InputStreamReader(urlConn.getInputStream());
-		BufferedReader buff = new BufferedReader(inStream);
-		String price = "not found";
+		final String[] SYM = {"MOGO", "SHOP", "ABST", "PPL", "ENB"};
+		final String fileName = "StockCollections.txt";
+		ArrayList<String> StockPrice = new ArrayList<>();
+		ArrayList<String> ChangeInStock = new ArrayList<>();
+		WebConnector wb = new WebConnector();
+		FileWriting fw = new FileWriting();
 		
-		String line = buff.readLine();
-		while(line !=null) {
-			//System.out.println(line);
-			if(line.contains("[\"SHOP\",")) {
-				int target = line.indexOf("[\"SHOP\",");
-				int deci = line.indexOf(".", target);
-				int start = deci;
-				while (line.charAt(start) != '[') {
-					start--;
-				}
-				price = line.substring(start + 1, deci + 3);
-			}
-			
-			line = buff.readLine();
-		}
-		System.out.println(price);
-	}
+		StockPrice = wb.gatherStockPrice(SYM);
 
+		System.out.println(StockPrice);
+		//fw.createFile(fileName);
+		//fw.writeToFile(SYM, fileName);
+		
+	}
 }
