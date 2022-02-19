@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class WebConnector {
 	
@@ -53,8 +55,45 @@ public class WebConnector {
 		return StockPrice;
 	}
 	
-	public ArrayList<String> gatherChangeInStockPrice(String[] SYM) throws IOException{
+	public List<String> gatherChangeInStockPrice(String[] SYM) throws IOException{
 		ArrayList<String> StockPriceChange = new ArrayList<>();
+		List<String> parsedData = new ArrayList<>();
+		String parsedDataString;
+		String lineToParse;
+		for (String s : SYM) {
+			
+			BufferedReader buff = establishConnection(s);
+			String priceChange = "not found";
+
+			String line = buff.readLine();	
+			while(line !=null) {
+				//System.out.println(line);
+				if(line.contains("[\""+s+"\",")) {
+					int target = line.indexOf("[\""+s+"\",");
+					
+					int deci = line.indexOf(".", target);
+					int start = deci;
+					while (line.charAt(start) != '[') {
+						start--;
+					}
+					lineToParse = line.substring(start + 1, deci + 31);
+					
+					parsedData = Arrays.asList(lineToParse.split(","));
+				}
+
+				line = buff.readLine();
+
+			}
+			System.out.println("price change of " + s + ":");
+			parsedDataString = parsedData.toString();			
+			System.out.println(filterStockPriceChange(parsedDataString));
+			StockPriceChange.add(filterStockPriceChange(parsedDataString));
+		}
 		return StockPriceChange;
+	}
+	
+	public String filterStockPriceChange(String parsedDataString){
+		String[] parts = parsedDataString.split(",");	
+		return parts[1];	
 	}
 }
