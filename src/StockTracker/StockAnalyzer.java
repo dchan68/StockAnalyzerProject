@@ -16,13 +16,13 @@ public class StockAnalyzer {
 	public static void main(String[] args) throws IOException{
 		final String[] SYM = {"MOGO", "SHOP", "ABST", "PPL", "ENB"};
 		final String fileName = "StockCollections.txt";
-		ArrayList<String> StockPrice = new ArrayList<>();
+		List<String> StockPrice = new ArrayList<>();
 		List<String> ChangeInStockPrice = new ArrayList<>();
 		WebConnector wb = new WebConnector();
 		FileWriting fw = new FileWriting();
 		
 		StockPrice = wb.gatherStockPrice(SYM);
-		ChangeInStockPrice = wb.gatherChangeInStockPrice(SYM);
+		ChangeInStockPrice = wb.gatherChangeInStockPriceInDollars(SYM);
 		System.out.println(StockPrice);
 		System.out.println(ChangeInStockPrice);
 		//fw.createFile(fileName);
