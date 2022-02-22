@@ -10,21 +10,25 @@ import java.util.List;
 
 import fileUtilities.FileWriting;
 
-
+//Got the idea to retrieve Stock price from https://www.youtube.com/watch?v=UVqjMbYlCFs&t=310s. Aside from connecting
+//to URL and retrieve stock price, the rest was my own idea
 public class StockAnalyzer {
 
 	public static void main(String[] args) throws IOException{
 		final String[] SYM = {"MOGO", "SHOP", "ABST", "PPL", "ENB"};
 		final String fileName = "StockCollections.txt";
 		List<String> StockPrice = new ArrayList<>();
-		List<String> ChangeInStockPrice = new ArrayList<>();
+		List<String> ChangeInStockPriceInDollars = new ArrayList<>();
+		List<String> ChangeInStockPriceInPercentage = new ArrayList<>();
 		WebConnector wb = new WebConnector();
 		FileWriting fw = new FileWriting();
 		
 		StockPrice = wb.gatherStockPrice(SYM);
-		ChangeInStockPrice = wb.gatherChangeInStockPriceInDollars(SYM);
+		ChangeInStockPriceInDollars = wb.gatherChangeInStockPriceInDollars(SYM);
+		ChangeInStockPriceInPercentage = wb.gatherChangeInStockPriceInPercentage(SYM);
 		System.out.println(StockPrice);
-		System.out.println(ChangeInStockPrice);
+		System.out.println(ChangeInStockPriceInDollars);
+		System.out.println(ChangeInStockPriceInPercentage);
 		//fw.createFile(fileName);
 		//fw.writeToFile(SYM, fileName);
 		
