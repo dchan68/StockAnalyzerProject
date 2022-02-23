@@ -16,7 +16,7 @@ public class StockAnalyzer {
 
 	public static void main(String[] args) throws IOException{
 		final String[] SYM = {"MOGO", "SHOP", "ABST", "PPL", "ENB"};
-		final String fileName = "StockCollections.txt";
+		final String fileName = "StockReports.txt";
 		List<String> StockPrice = new ArrayList<>();
 		List<String> ChangeInStockPriceInDollars = new ArrayList<>();
 		List<String> ChangeInStockPriceInPercentage = new ArrayList<>();
@@ -29,8 +29,8 @@ public class StockAnalyzer {
 		System.out.println(StockPrice);
 		System.out.println(ChangeInStockPriceInDollars);
 		System.out.println(ChangeInStockPriceInPercentage);
-		//fw.createFile(fileName);
-		//fw.writeToFile(SYM, fileName);
+		fw.createFile(fileName);
+		fw.writeToFile(SYM, fileName, StockPrice, ChangeInStockPriceInDollars, ChangeInStockPriceInPercentage);
 		
 //		BufferedReader buff;
 //		
